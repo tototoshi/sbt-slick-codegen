@@ -8,6 +8,8 @@ slick-codegen compile hook for sbt
 // plugins.sbt
 
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "0.1.0-SNAPSHOT")
+
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
 ## Configuration

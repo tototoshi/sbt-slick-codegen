@@ -43,7 +43,8 @@ slickCodegenOutputPackage in Compile := "com.example.models"
 slickCodegenCodeGenerator in Compile := { (model: m.Model) => new SourceCodeGenerator(model) }
 
 // optional
-slickCodegenExcludedTables in Compile := Seq("play_evolutions")
+// For example, to exclude flyway's schema_version table from the target of codegen
+slickCodegenExcludedTables in Compile := Seq("schema_version")
 ```
 
 ## License

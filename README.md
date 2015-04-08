@@ -1,6 +1,6 @@
 # sbt-slick-codegen
 
-slick-codegen hook for sbt
+slick-codegen compile hook for sbt
 
 ## Install
 

@@ -29,10 +29,10 @@ slickCodegenDatabaseUser in Compile := "dbuser"
 slickCodegenDatabasePassword in Compile := "dbpassword"
 
 // required (If not set, postgresql driver is choosen)
-slickCodegenDriver := scala.slick.driver.PostgresDriver
+slickCodegenDriver in Compile := scala.slick.driver.PostgresDriver
 
 // required (If not set, postgresql driver is choosen)
-slickCodegenJdbcDriver := "org.postgresql.Driver"
+slickCodegenJdbcDriver in Compile := "org.postgresql.Driver"
 
 // optional but maybe you want
 slickCodegenOutputPackage in Compile := "com.example.models"
@@ -41,7 +41,7 @@ slickCodegenOutputPackage in Compile := "com.example.models"
 slickCodegenCodeGenerator in Compile := { (model:  m.Model) => new SourceCodeGenerator(model) }
 
 // optional
-slickCodegenExcludedTables := Seq("play_evolutions")
+slickCodegenExcludedTables in Compile := Seq("play_evolutions")
 ```
 
 ## License

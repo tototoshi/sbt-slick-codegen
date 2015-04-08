@@ -7,7 +7,7 @@ slick-codegen hook for sbt
 ```scala
 // plugins.sbt
 
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "0.1.0-SNAPSHOT
+addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "0.1.0-SNAPSHOT")
 ```
 
 ## Configuration

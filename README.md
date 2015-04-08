@@ -38,7 +38,7 @@ slickCodegenJdbcDriver in Compile := "org.postgresql.Driver"
 slickCodegenOutputPackage in Compile := "com.example.models"
 
 // optional, pass your own custom source code generator
-slickCodegenCodeGenerator in Compile := { (model:  m.Model) => new SourceCodeGenerator(model) }
+slickCodegenCodeGenerator in Compile := { (model: m.Model) => new SourceCodeGenerator(model) }
 
 // optional
 slickCodegenExcludedTables in Compile := Seq("play_evolutions")

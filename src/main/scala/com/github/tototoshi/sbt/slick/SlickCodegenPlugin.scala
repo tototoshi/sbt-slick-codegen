@@ -8,12 +8,7 @@ import scala.slick.{ model => m }
 
 object CodegenPlugin extends sbt.Plugin {
 
-  case class SlickCodegenDatabase(url: String, user: String, password: String)
-
   lazy val slickCodegen: TaskKey[Seq[File]] = TaskKey[Seq[File]]("Command to run codegen")
-
-  lazy val slickCodegenDatabase: SettingKey[SlickCodegenDatabase] =
-    SettingKey[SlickCodegenDatabase]("Database used by codegen")
 
   lazy val slickCodegenDatabaseUrl: SettingKey[String] =
     SettingKey[String]("URL of database used by codegen")

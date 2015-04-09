@@ -28,28 +28,28 @@ slickCodegenSettings
 
 // required
 // Register codegen hook
-sourceGenerators in Compile <+= slickCodegen
+sourceGenerators <+= slickCodegen
 
 // required
-slickCodegenDatabaseUrl in Compile := "jdbc:postgresql://localhost/example"
+slickCodegenDatabaseUrl := "jdbc:postgresql://localhost/example"
 
 // required
-slickCodegenDatabaseUser in Compile := "dbuser"
+slickCodegenDatabaseUser := "dbuser"
 
 // required
-slickCodegenDatabasePassword in Compile := "dbpassword"
+slickCodegenDatabasePassword := "dbpassword"
 
 // required (If not set, postgresql driver is choosen)
-slickCodegenDriver in Compile := scala.slick.driver.PostgresDriver
+slickCodegenDriver := scala.slick.driver.PostgresDriver
 
 // required (If not set, postgresql driver is choosen)
-slickCodegenJdbcDriver in Compile := "org.postgresql.Driver"
+slickCodegenJdbcDriver := "org.postgresql.Driver"
 
 // optional but maybe you want
-slickCodegenOutputPackage in Compile := "com.example.models"
+slickCodegenOutputPackage := "com.example.models"
 
 // optional, pass your own custom source code generator
-slickCodegenCodeGenerator in Compile := { (model: m.Model) => new SourceCodeGenerator(model) }
+slickCodegenCodeGenerator := { (model: m.Model) => new SourceCodeGenerator(model) }
 
 // optional
 // For example, to exclude flyway's schema_version table from the target of codegen

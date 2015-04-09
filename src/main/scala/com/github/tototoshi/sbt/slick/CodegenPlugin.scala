@@ -90,20 +90,20 @@ object CodegenPlugin extends sbt.Plugin {
     slickCodegenCodeGenerator := defaultSourceCodeGenerator,
     slickCodegen := {
       val outDir = (sourceManaged in Compile).value.getPath
-      val outPkg = (slickCodegenOutputPackage in Compile).value
-      val outFile = (slickCodegenOutputFile in Compile).value
+      val outPkg = (slickCodegenOutputPackage).value
+      val outFile = (slickCodegenOutputFile).value
       gen(
-        (slickCodegenCodeGenerator in Compile).value,
-        (slickCodegenDriver in Compile).value,
-        (slickCodegenJdbcDriver in Compile).value,
-        (slickCodegenDatabaseUrl in Compile).value,
-        (slickCodegenDatabaseUser in Compile).value,
-        (slickCodegenDatabasePassword in Compile).value,
+        (slickCodegenCodeGenerator).value,
+        (slickCodegenDriver).value,
+        (slickCodegenJdbcDriver).value,
+        (slickCodegenDatabaseUrl).value,
+        (slickCodegenDatabaseUser).value,
+        (slickCodegenDatabasePassword).value,
         outDir,
         outPkg,
         outFile,
-        (slickCodegenOutputContainer in Compile).value,
-        (slickCodegenExcludedTables in Compile).value,
+        (slickCodegenOutputContainer).value,
+        (slickCodegenExcludedTables).value,
         streams.value
       )
       Seq(file(outDir + "/" + outPkg.replaceAllLiterally(".", "/") + "/" + outFile))

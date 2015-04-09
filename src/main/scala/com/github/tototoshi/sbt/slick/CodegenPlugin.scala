@@ -77,7 +77,7 @@ object CodegenPlugin extends sbt.Plugin {
     s.log.info(s"Source code has generated in ${outputDir}/${fileName}")
   }
 
-  override def settings: Seq[Setting[_]] = Seq(
+  lazy val slickCodegenSettings: Seq[Setting[_]] = Seq(
     slickCodegenDriver := scala.slick.driver.PostgresDriver,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",

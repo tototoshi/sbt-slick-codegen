@@ -55,6 +55,11 @@ slickCodegenCodeGenerator in Compile := { (model: m.Model) => new SourceCodeGene
 slickCodegenExcludedTables in Compile := Seq("schema_version")
 ```
 
+## Example
+
+https://github.com/tototoshi/sbt-slick-codegen-example
+
+
 ## License
 
 Apache 2.0

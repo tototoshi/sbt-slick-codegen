@@ -10,11 +10,17 @@ slick-codegen compile hook for sbt
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "0.1.0-SNAPSHOT")
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
+// Database driver
+// For example, when you are using PostgreSQL
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 ```
 
 ## Configuration
 
 ```scala
+// build.sbt
+
 import com.github.tototoshi.sbt.slick.CodegenPlugin._
 
 // required

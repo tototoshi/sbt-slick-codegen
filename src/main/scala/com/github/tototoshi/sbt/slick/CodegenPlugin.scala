@@ -8,37 +8,37 @@ import scala.slick.{ model => m }
 
 object CodegenPlugin extends sbt.Plugin {
 
-  lazy val slickCodegen: TaskKey[Seq[File]] = TaskKey[Seq[File]]("Command to run codegen")
+  lazy val slickCodegen: TaskKey[Seq[File]] = taskKey[Seq[File]]("Command to run codegen")
 
   lazy val slickCodegenDatabaseUrl: SettingKey[String] =
-    SettingKey[String]("URL of database used by codegen")
+    settingKey[String]("URL of database used by codegen")
 
   lazy val slickCodegenDatabaseUser: SettingKey[String] =
-    SettingKey[String]("User of database used by codegen")
+    settingKey[String]("User of database used by codegen")
 
   lazy val slickCodegenDatabasePassword: SettingKey[String] =
-    SettingKey[String]("Password of database used by codegen")
+    settingKey[String]("Password of database used by codegen")
 
   lazy val slickCodegenDriver: SettingKey[JdbcProfile] =
-    SettingKey[JdbcProfile]("Slick driver used by codegen")
+    settingKey[JdbcProfile]("Slick driver used by codegen")
 
   lazy val slickCodegenJdbcDriver: SettingKey[String] =
-    SettingKey[String]("Jdbc driver used by codegen")
+    settingKey[String]("Jdbc driver used by codegen")
 
   lazy val slickCodegenOutputPackage: SettingKey[String] =
-    SettingKey[String]("Package of generated code")
+    settingKey[String]("Package of generated code")
 
   lazy val slickCodegenOutputFile: SettingKey[String] =
-    SettingKey[String]("Generated file")
+    settingKey[String]("Generated file")
 
   lazy val slickCodegenOutputContainer: SettingKey[String] =
-    SettingKey[String]("Container of generated source code")
+    settingKey[String]("Container of generated source code")
 
   lazy val slickCodegenCodeGenerator: SettingKey[m.Model => SourceCodeGenerator] =
-    SettingKey[m.Model => SourceCodeGenerator]("Function to create CodeGenerator to be used")
+    settingKey[m.Model => SourceCodeGenerator]("Function to create CodeGenerator to be used")
 
   lazy val slickCodegenExcludedTables: SettingKey[Seq[String]] =
-    SettingKey[Seq[String]]("Tables that should be excluded")
+    ettingKey[Seq[String]]("Tables that should be excluded")
 
   lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
     new SourceCodeGenerator(model)

@@ -38,7 +38,7 @@ object CodegenPlugin extends sbt.Plugin {
     settingKey[m.Model => SourceCodeGenerator]("Function to create CodeGenerator to be used")
 
   lazy val slickCodegenExcludedTables: SettingKey[Seq[String]] =
-    ettingKey[Seq[String]]("Tables that should be excluded")
+    settingKey[Seq[String]]("Tables that should be excluded")
 
   lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
     new SourceCodeGenerator(model)

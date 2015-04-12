@@ -10,13 +10,15 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-version := "0.1.0"
+version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.10.5"
 
+lazy val slickVersion = "3.0.0-RC3"
+
 libraryDependencies ++= Seq(
-  "com.typesafe.slick" %% "slick" % "2.1.0",
-  "com.typesafe.slick" %% "slick-codegen" % "2.1.0"
+  "com.typesafe.slick" %% "slick" % slickVersion,
+  "com.typesafe.slick" %% "slick-codegen" % slickVersion
 )
 
 publishMavenStyle := true

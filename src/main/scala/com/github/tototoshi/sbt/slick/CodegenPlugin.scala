@@ -2,9 +2,10 @@ package com.github.tototoshi.sbt.slick
 
 import sbt._
 import Keys._
-import scala.slick.codegen.SourceCodeGenerator
-import scala.slick.driver.JdbcProfile
-import scala.slick.{ model => m }
+import slick.codegen.SourceCodeGenerator
+import slick.driver.JdbcProfile
+import slick.{ model => m }
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object CodegenPlugin extends sbt.Plugin {
 
@@ -60,25 +61,26 @@ object CodegenPlugin extends sbt.Plugin {
     s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
 
     val database = driver.simple.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
-    val model = database.withSession {
-      implicit session =>
-        val tables = driver.defaultTables.filterNot(t => excluded contains t.name.name)
-        driver.createModel(Some(tables))
-    }
 
-    generator(model).writeToFile(
-      profile = "scala.slick.driver." + driver.toString,
+    val tables = driver.defaultTables.map(ts => ts.filterNot(t => excluded contains t.name.name))
+
+    val dbio = for {
+      m <- driver.createModel(Some(tables))
+    } yield generator(m).writeToFile(
+      profile = "slick.driver." + driver.toString,
       folder = outputDir,
       pkg = pkg,
       container = container,
       fileName = fileName
     )
 
+    database.run(dbio)
+
     s.log.info(s"Source code has generated in ${outputDir}/${fileName}")
   }
 
   lazy val slickCodegenSettings: Seq[Setting[_]] = Seq(
-    slickCodegenDriver := scala.slick.driver.PostgresDriver,
+    slickCodegenDriver := slick.driver.PostgresDriver,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",
     slickCodegenDatabaseUser := "Database user is not set",

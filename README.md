@@ -26,7 +26,7 @@ slickCodegenSettings
 
 // required
 // Register codegen hook
-sourceGenerators <+= slickCodegen
+sourceGenerators in Compile <+= slickCodegen
 
 // required
 slickCodegenDatabaseUrl := "jdbc:postgresql://localhost/example"

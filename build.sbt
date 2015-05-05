@@ -1,7 +1,3 @@
-import SonatypeKeys._
-
-sonatypeSettings
-
 scalariformSettings
 
 sbtPlugin := true

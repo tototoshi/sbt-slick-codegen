@@ -18,8 +18,8 @@ libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 
 ```scala
 // build.sbt
-import scala.slick.codegen.SourceCodeGenerator
-import scala.slick.{ model => m }
+import slick.codegen.SourceCodeGenerator
+import slick.{ model => m }
 
 // required
 slickCodegenSettings

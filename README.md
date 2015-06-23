@@ -52,6 +52,9 @@ slickCodegenCodeGenerator := { (model: m.Model) => new SourceCodeGenerator(model
 // optional
 // For example, to exclude flyway's schema_version table from the target of codegen
 slickCodegenExcludedTables in Compile := Seq("schema_version")
+
+//optional
+slickCodegenOutputDir := (sourceManaged in Compile).value
 ```
 
 ## Example

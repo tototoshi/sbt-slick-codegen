@@ -56,7 +56,7 @@ object CodegenPlugin extends sbt.Plugin {
     fileName: String,
     container: String,
     excluded: Seq[String],
-    s: TaskStreams): Unit = {
+    s: TaskStreams): File = {
 
     s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
 
@@ -76,7 +76,9 @@ object CodegenPlugin extends sbt.Plugin {
 
     database.run(dbio)
 
-    s.log.info(s"Source code has generated in ${outputDir}/${fileName}")
+    val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+    s.log.info(s"Source code has generated in ${generatedFile}")
+    file(generatedFile)
   }
 
   lazy val slickCodegenSettings: Seq[Setting[_]] = Seq(
@@ -94,7 +96,7 @@ object CodegenPlugin extends sbt.Plugin {
       val outDir = (sourceManaged in Compile).value.getPath
       val outPkg = (slickCodegenOutputPackage).value
       val outFile = (slickCodegenOutputFile).value
-      gen(
+      Seq(gen(
         (slickCodegenCodeGenerator).value,
         (slickCodegenDriver).value,
         (slickCodegenJdbcDriver).value,
@@ -107,8 +109,7 @@ object CodegenPlugin extends sbt.Plugin {
         (slickCodegenOutputContainer).value,
         (slickCodegenExcludedTables).value,
         streams.value
-      )
-      Seq(file(outDir + "/" + outPkg.replaceAllLiterally(".", "/") + "/" + outFile))
+      ))
     }
   )
 

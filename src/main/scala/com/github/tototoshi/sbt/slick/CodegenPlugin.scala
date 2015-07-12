@@ -32,6 +32,9 @@ object CodegenPlugin extends sbt.Plugin {
   lazy val slickCodegenOutputFile: SettingKey[String] =
     settingKey[String]("Generated file")
 
+  lazy val slickCodegenOutputDir: SettingKey[File] =
+    settingKey[File]("Folder where the generated file lives in")
+
   lazy val slickCodegenOutputContainer: SettingKey[String] =
     settingKey[String]("Container of generated source code")
 
@@ -87,25 +90,34 @@ object CodegenPlugin extends sbt.Plugin {
     slickCodegenDatabasePassword := "Database password is not set",
     slickCodegenOutputPackage := "com.example",
     slickCodegenOutputFile := "Tables.scala",
+    slickCodegenOutputDir := (sourceManaged in Compile).value,
     slickCodegenOutputContainer := "Tables",
     slickCodegenExcludedTables := Seq(),
     slickCodegenCodeGenerator := defaultSourceCodeGenerator,
     slickCodegen := {
-      val outDir = (sourceManaged in Compile).value.getPath
-      val outPkg = (slickCodegenOutputPackage).value
-      val outFile = (slickCodegenOutputFile).value
+      val outDir = {
+        val folder = slickCodegenOutputDir.value
+        if (folder.exists()){
+          require(folder.isDirectory, s"file :[$folder] is not a directory")
+        }else{
+          folder.mkdir()
+        }
+        folder.getPath
+      }
+      val outPkg = slickCodegenOutputPackage.value
+      val outFile = slickCodegenOutputFile.value
       gen(
-        (slickCodegenCodeGenerator).value,
-        (slickCodegenDriver).value,
-        (slickCodegenJdbcDriver).value,
-        (slickCodegenDatabaseUrl).value,
-        (slickCodegenDatabaseUser).value,
-        (slickCodegenDatabasePassword).value,
+        slickCodegenCodeGenerator.value,
+        slickCodegenDriver.value,
+        slickCodegenJdbcDriver.value,
+        slickCodegenDatabaseUrl.value,
+        slickCodegenDatabaseUser.value,
+        slickCodegenDatabasePassword.value,
         outDir,
         outPkg,
         outFile,
-        (slickCodegenOutputContainer).value,
-        (slickCodegenExcludedTables).value,
+        slickCodegenOutputContainer.value,
+        slickCodegenExcludedTables.value,
         streams.value
       )
       Seq(file(outDir + "/" + outPkg.replaceAllLiterally(".", "/") + "/" + outFile))

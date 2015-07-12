@@ -6,9 +6,9 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-version := "1.0.0"
+version := "1.1.0-SNAPSHOT"
 
-scalaVersion := "2.10.5"
+scalaVersion := "2.10.7"
 
 lazy val slickVersion = "3.0.0"
 

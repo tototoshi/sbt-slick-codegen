@@ -59,7 +59,7 @@ object CodegenPlugin extends sbt.Plugin {
     fileName: String,
     container: String,
     excluded: Seq[String],
-    s: TaskStreams): Unit = {
+    s: TaskStreams): File = {
 
     s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
 
@@ -79,7 +79,9 @@ object CodegenPlugin extends sbt.Plugin {
 
     database.run(dbio)
 
-    s.log.info(s"Source code has generated in ${outputDir}/${fileName}")
+    val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+    s.log.info(s"Source code has generated in ${generatedFile}")
+    file(generatedFile)
   }
 
   lazy val slickCodegenSettings: Seq[Setting[_]] = Seq(
@@ -97,30 +99,29 @@ object CodegenPlugin extends sbt.Plugin {
     slickCodegen := {
       val outDir = {
         val folder = slickCodegenOutputDir.value
-        if (folder.exists()){
+        if (folder.exists()) {
           require(folder.isDirectory, s"file :[$folder] is not a directory")
-        }else{
+        } else {
           folder.mkdir()
         }
         folder.getPath
       }
-      val outPkg = slickCodegenOutputPackage.value
-      val outFile = slickCodegenOutputFile.value
-      gen(
-        slickCodegenCodeGenerator.value,
-        slickCodegenDriver.value,
-        slickCodegenJdbcDriver.value,
-        slickCodegenDatabaseUrl.value,
-        slickCodegenDatabaseUser.value,
-        slickCodegenDatabasePassword.value,
+      val outPkg = (slickCodegenOutputPackage).value
+      val outFile = (slickCodegenOutputFile).value
+      Seq(gen(
+        (slickCodegenCodeGenerator).value,
+        (slickCodegenDriver).value,
+        (slickCodegenJdbcDriver).value,
+        (slickCodegenDatabaseUrl).value,
+        (slickCodegenDatabaseUser).value,
+        (slickCodegenDatabasePassword).value,
         outDir,
         outPkg,
         outFile,
         slickCodegenOutputContainer.value,
         slickCodegenExcludedTables.value,
         streams.value
-      )
-      Seq(file(outDir + "/" + outPkg.replaceAllLiterally(".", "/") + "/" + outFile))
+      ))
     }
   )
 

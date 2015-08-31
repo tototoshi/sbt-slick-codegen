@@ -61,9 +61,16 @@ object CodegenPlugin extends sbt.Plugin {
     excluded: Seq[String],
     s: TaskStreams): File = {
 
-    s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
+    val database = driver.api.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
 
-    val database = driver.simple.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
+    try {
+      database.source.createConnection().close()
+    } catch {
+      case e: Throwable =>
+        throw new RuntimeException( "Failed to run slick-codegen: " + e.getMessage, e )
+    }
+
+    s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
 
     val tables = driver.defaultTables.map(ts => ts.filterNot(t => excluded contains t.name.name))
 

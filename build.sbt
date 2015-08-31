@@ -10,7 +10,7 @@ version := "1.1.0"
 
 scalaVersion := "2.10.5"
 
-lazy val slickVersion = "3.0.0"
+val slickVersion = "3.0.2"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion,

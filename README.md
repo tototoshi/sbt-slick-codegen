@@ -7,7 +7,7 @@ slick-codegen compile hook for sbt
 ```scala
 // plugins.sbt
 
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.1.0")
+addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.1.1")
 
 // Database driver
 // For example, when you are using PostgreSQL

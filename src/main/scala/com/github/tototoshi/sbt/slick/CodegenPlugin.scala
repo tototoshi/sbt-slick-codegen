@@ -67,7 +67,7 @@ object CodegenPlugin extends sbt.Plugin {
       database.source.createConnection().close()
     } catch {
       case e: Throwable =>
-        throw new RuntimeException( "Failed to run slick-codegen: " + e.getMessage, e )
+        throw new RuntimeException("Failed to run slick-codegen: " + e.getMessage, e)
     }
 
     s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")

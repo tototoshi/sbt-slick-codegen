@@ -6,11 +6,11 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-version := "1.1.1"
+version := "1.2.0"
 
-scalaVersion := "2.10.5"
+scalaVersion := "2.10.6"
 
-val slickVersion = "3.0.2"
+val slickVersion = "3.1.0"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion,

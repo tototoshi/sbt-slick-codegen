@@ -3,4 +3,5 @@
 /project/*-shim.sbt
 /project/project/
 /project/target/
+/.idea
 /target/

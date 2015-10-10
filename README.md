@@ -7,12 +7,18 @@ slick-codegen compile hook for sbt
 ```scala
 // plugins.sbt
 
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.1.1")
+addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.2.0")
 
 // Database driver
 // For example, when you are using PostgreSQL
 libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 ```
+Table capability
+
+|Slick version|Plugin version|
+|-------------|--------------|
+|3.1.x|1.2.0|
+|3.0.x|1.1.1|
 
 ## Configuration
 

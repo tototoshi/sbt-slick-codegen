@@ -10,7 +10,7 @@ version := "1.2.0-SNAPSHOT"
 
 scalaVersion := "2.10.5"
 
-val slickVersion = "3.0.2"
+val slickVersion = "3.1.0"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion,

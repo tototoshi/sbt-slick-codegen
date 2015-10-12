@@ -6,7 +6,7 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-version := "1.2.0-SNAPSHOT"
+version := "1.2.0"
 
 scalaVersion := "2.10.6"
 

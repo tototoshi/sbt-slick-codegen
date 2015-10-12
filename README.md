@@ -4,10 +4,16 @@ slick-codegen compile hook for sbt
 
 ## Install
 
+|Slick version|slick-codegen version|
+|-------------|--------------|
+|3.1.x|1.2.0|
+|3.0.x|1.1.1|
+
+
 ```scala
 // plugins.sbt
 
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.1.1")
+addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % slickCodegenVersion)
 
 // Database driver
 // For example, when you are using PostgreSQL
@@ -38,7 +44,7 @@ slickCodegenDatabaseUser := "dbuser"
 slickCodegenDatabasePassword := "dbpassword"
 
 // required (If not set, postgresql driver is choosen)
-slickCodegenDriver := scala.slick.driver.PostgresDriver
+slickCodegenDriver := slick.driver.PostgresDriver
 
 // required (If not set, postgresql driver is choosen)
 slickCodegenJdbcDriver := "org.postgresql.Driver"

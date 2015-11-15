@@ -1,11 +1,15 @@
 package com.github.tototoshi.sbt.slick
 
+import java.io.File
+
 import sbt._
 import Keys._
 import slick.codegen.SourceCodeGenerator
 import slick.driver.JdbcProfile
 import slick.{ model => m }
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
 
 object CodegenPlugin extends sbt.Plugin {
 
@@ -84,9 +88,19 @@ object CodegenPlugin extends sbt.Plugin {
       fileName = fileName
     )
 
-    database.run(dbio)
+    Await.ready(
+      {
+        val f = database.run(dbio)
+        f onFailure {
+          case e: Throwable =>
+            s.log.info("CodegenPlugin Error")
+            e.printStackTrace()
+        }
+        f
+      }
+    , Duration.Inf)
 
-    val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+    val generatedFile = outputDir + File.separator + pkg.replaceAllLiterally(".", File.separator) + File.separator + fileName
     s.log.info(s"Source code has generated in ${generatedFile}")
     file(generatedFile)
   }

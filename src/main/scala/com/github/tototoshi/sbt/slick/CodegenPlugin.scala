@@ -5,7 +5,10 @@ import Keys._
 import slick.codegen.SourceCodeGenerator
 import slick.driver.JdbcProfile
 import slick.{ model => m }
+
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
 
 object CodegenPlugin extends sbt.Plugin {
 
@@ -84,7 +87,7 @@ object CodegenPlugin extends sbt.Plugin {
       fileName = fileName
     )
 
-    database.run(dbio)
+    Await.result(database.run(dbio), Duration.Inf)
 
     val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
     s.log.info(s"Source code has generated in ${generatedFile}")

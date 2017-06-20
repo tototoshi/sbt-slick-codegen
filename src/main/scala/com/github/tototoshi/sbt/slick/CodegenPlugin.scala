@@ -84,10 +84,18 @@ object CodegenPlugin extends sbt.Plugin {
       .map(ts => ts.filterNot(t => excluded contains t.name.name))
       
 
+    val driverClassName = driver.getClass.getName
+    val profile = {
+      // if it's a singleton object, then just reference it directly
+      if (driverClassName.endsWith("$")) driverClassName.stripSuffix("$")
+      // if it's an instance of a regular class, we don't know constructor args; try the no-arguments constructor and hope for the best
+      else s"new $driverClassName()"
+    }
+
     val dbio = for {
       m <- driver.createModel(Some(tables))
     } yield generator(m).writeToFile(
-      profile = "slick.driver." + driver.toString,
+      profile = profile,
       folder = outputDir,
       pkg = pkg,
       container = container,

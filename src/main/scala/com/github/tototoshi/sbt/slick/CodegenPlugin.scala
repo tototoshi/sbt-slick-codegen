@@ -47,6 +47,9 @@ object CodegenPlugin extends sbt.Plugin {
   lazy val slickCodegenExcludedTables: SettingKey[Seq[String]] =
     settingKey[Seq[String]]("Tables that should be excluded")
 
+  lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
+    settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
+  
   lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
     new SourceCodeGenerator(model)
 
@@ -62,6 +65,7 @@ object CodegenPlugin extends sbt.Plugin {
     fileName: String,
     container: String,
     excluded: Seq[String],
+    included: Seq[String],
     s: TaskStreams): File = {
 
     val database = driver.api.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
@@ -75,7 +79,10 @@ object CodegenPlugin extends sbt.Plugin {
 
     s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
 
-    val tables = driver.defaultTables.map(ts => ts.filterNot(t => excluded contains t.name.name))
+    val tables = driver.defaultTables
+      .map(ts => ts.filter(t => included.isEmpty || (included contains t.name.name)))
+      .map(ts => ts.filterNot(t => excluded contains t.name.name))
+      
 
     val dbio = for {
       m <- driver.createModel(Some(tables))
@@ -105,6 +112,7 @@ object CodegenPlugin extends sbt.Plugin {
     slickCodegenOutputDir := (sourceManaged in Compile).value,
     slickCodegenOutputContainer := "Tables",
     slickCodegenExcludedTables := Seq(),
+    slickCodegenIncludedTables := Seq(),
     slickCodegenCodeGenerator := defaultSourceCodeGenerator,
     slickCodegen := {
       val outDir = {
@@ -130,6 +138,7 @@ object CodegenPlugin extends sbt.Plugin {
         outFile,
         slickCodegenOutputContainer.value,
         slickCodegenExcludedTables.value,
+        slickCodegenIncludedTables.value,
         streams.value
       ))
     }

@@ -56,7 +56,11 @@ slickCodegenOutputPackage := "com.example.models"
 slickCodegenCodeGenerator := { (model: m.Model) => new SourceCodeGenerator(model) }
 
 // optional
-// For example, to exclude flyway's schema_version table from the target of codegen
+// For example of all the tables in a database we only would like to take table named "users"
+slickCodegenIncludedTables in Compile := Seq("users")
+
+// optional
+// For example, to exclude flyway's schema_version table from the target of codegen. This still applies after slickCodegenIncludedTables.
 slickCodegenExcludedTables in Compile := Seq("schema_version")
 
 //optional

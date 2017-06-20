@@ -49,7 +49,7 @@ object CodegenPlugin extends sbt.Plugin {
 
   lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
     settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
-  
+
   lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
     new SourceCodeGenerator(model)
 
@@ -82,7 +82,6 @@ object CodegenPlugin extends sbt.Plugin {
     val tables = driver.defaultTables
       .map(ts => ts.filter(t => included.isEmpty || (included contains t.name.name)))
       .map(ts => ts.filterNot(t => excluded contains t.name.name))
-      
 
     val driverClassName = driver.getClass.getName
     val profile = {

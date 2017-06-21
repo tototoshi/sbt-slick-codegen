@@ -10,48 +10,55 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 
-object CodegenPlugin extends sbt.Plugin {
+object CodegenPlugin extends sbt.AutoPlugin {
 
-  lazy val slickCodegen: TaskKey[Seq[File]] = taskKey[Seq[File]]("Command to run codegen")
+  object autoImport {
+    lazy val slickCodegen: TaskKey[Seq[File]] = taskKey[Seq[File]]("Command to run codegen")
 
-  lazy val slickCodegenDatabaseUrl: SettingKey[String] =
-    settingKey[String]("URL of database used by codegen")
+    lazy val slickCodegenDatabaseUrl: SettingKey[String] =
+      settingKey[String]("URL of database used by codegen")
 
-  lazy val slickCodegenDatabaseUser: SettingKey[String] =
-    settingKey[String]("User of database used by codegen")
+    lazy val slickCodegenDatabaseUser: SettingKey[String] =
+      settingKey[String]("User of database used by codegen")
 
-  lazy val slickCodegenDatabasePassword: SettingKey[String] =
-    settingKey[String]("Password of database used by codegen")
+    lazy val slickCodegenDatabasePassword: SettingKey[String] =
+      settingKey[String]("Password of database used by codegen")
 
-  lazy val slickCodegenDriver: SettingKey[JdbcProfile] =
-    settingKey[JdbcProfile]("Slick driver used by codegen")
+    lazy val slickCodegenDriver: SettingKey[JdbcProfile] =
+      settingKey[JdbcProfile]("Slick driver used by codegen")
 
-  lazy val slickCodegenJdbcDriver: SettingKey[String] =
-    settingKey[String]("Jdbc driver used by codegen")
+    lazy val slickCodegenJdbcDriver: SettingKey[String] =
+      settingKey[String]("Jdbc driver used by codegen")
 
-  lazy val slickCodegenOutputPackage: SettingKey[String] =
-    settingKey[String]("Package of generated code")
+    lazy val slickCodegenOutputPackage: SettingKey[String] =
+      settingKey[String]("Package of generated code")
 
-  lazy val slickCodegenOutputFile: SettingKey[String] =
-    settingKey[String]("Generated file")
+    lazy val slickCodegenOutputFile: SettingKey[String] =
+      settingKey[String]("Generated file")
 
-  lazy val slickCodegenOutputDir: SettingKey[File] =
-    settingKey[File]("Folder where the generated file lives in")
+    lazy val slickCodegenOutputDir: SettingKey[File] =
+      settingKey[File]("Folder where the generated file lives in")
 
-  lazy val slickCodegenOutputContainer: SettingKey[String] =
-    settingKey[String]("Container of generated source code")
+    lazy val slickCodegenOutputContainer: SettingKey[String] =
+      settingKey[String]("Container of generated source code")
 
-  lazy val slickCodegenCodeGenerator: SettingKey[m.Model => SourceCodeGenerator] =
-    settingKey[m.Model => SourceCodeGenerator]("Function to create CodeGenerator to be used")
+    lazy val slickCodegenCodeGenerator: SettingKey[m.Model => SourceCodeGenerator] =
+      settingKey[m.Model => SourceCodeGenerator]("Function to create CodeGenerator to be used")
 
-  lazy val slickCodegenExcludedTables: SettingKey[Seq[String]] =
-    settingKey[Seq[String]]("Tables that should be excluded")
+    lazy val slickCodegenExcludedTables: SettingKey[Seq[String]] =
+      settingKey[Seq[String]]("Tables that should be excluded")
 
-  lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
-    settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
+    lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
+      settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
 
-  lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
-    new SourceCodeGenerator(model)
+    lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
+      new SourceCodeGenerator(model)
+
+    @deprecated("use enablePlugins(CodegenPlugin)", "")
+    lazy val slickCodegenSettings: Seq[Setting[_]] = projectSettings
+  }
+
+  import autoImport._
 
   private def gen(
     generator: m.Model => SourceCodeGenerator,
@@ -108,7 +115,7 @@ object CodegenPlugin extends sbt.Plugin {
     file(generatedFile)
   }
 
-  lazy val slickCodegenSettings: Seq[Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[Setting[_]] = Seq(
     slickCodegenDriver := slick.driver.PostgresDriver,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",

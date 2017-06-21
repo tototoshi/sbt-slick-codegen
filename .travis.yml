@@ -11,7 +11,7 @@ before_script:
 - psql -c "CREATE ROLE test WITH SUPERUSER LOGIN PASSWORD 'test';" -U postgres
 - psql -c "CREATE DATABASE example;" -U postgres
 script:
-- sbt scripted
+- sbt "^^ ${SBT_VERSION}" scripted
 - git diff --exit-code # check scalariform
 before_cache:
 - find $HOME/.sbt -name "*.lock" | xargs rm
@@ -21,3 +21,7 @@ cache:
   directories:
   - $HOME/.ivy2/cache
   - $HOME/.sbt/launchers
+env:
+  matrix:
+  - SBT_VERSION="0.13.15"
+  - SBT_VERSION="1.0.0-M6"

@@ -1,0 +1,23 @@
+language: scala
+sudo: false
+addons:
+  postgresql: "9.4"
+  apt:
+    packages:
+    - oracle-java8-installer
+jdk:
+- oraclejdk8
+before_script:
+- psql -c "CREATE ROLE test WITH SUPERUSER LOGIN PASSWORD 'test';" -U postgres
+- psql -c "CREATE DATABASE example;" -U postgres
+script:
+- sbt scripted
+- git diff --exit-code # check scalariform
+before_cache:
+- find $HOME/.sbt -name "*.lock" | xargs rm
+- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+- find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
+cache:
+  directories:
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/launchers

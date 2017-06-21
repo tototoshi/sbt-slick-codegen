@@ -47,3 +47,16 @@ pomExtra :=
       <url>http://tototoshi.github.io</url>
     </developer>
   </developers>
+
+ScriptedPlugin.scriptedSettings
+
+ScriptedPlugin.scriptedBufferLog := false
+
+ScriptedPlugin.scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
+  a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
+)
+
+ScriptedPlugin.scriptedLaunchOpts ++= Seq(
+  "-Dplugin.version=" + version.value,
+  "-Dslick.version=" + slickVersion
+)

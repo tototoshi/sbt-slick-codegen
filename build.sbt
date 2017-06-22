@@ -6,7 +6,7 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-version := "1.2.1"
+version := "1.2.2-SNAPSHOT"
 
 scalaVersion := "2.10.6"
 
@@ -47,3 +47,16 @@ pomExtra :=
       <url>http://tototoshi.github.io</url>
     </developer>
   </developers>
+
+ScriptedPlugin.scriptedSettings
+
+ScriptedPlugin.scriptedBufferLog := false
+
+ScriptedPlugin.scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
+  a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
+)
+
+ScriptedPlugin.scriptedLaunchOpts ++= Seq(
+  "-Dplugin.version=" + version.value,
+  "-Dslick.version=" + slickVersion
+)

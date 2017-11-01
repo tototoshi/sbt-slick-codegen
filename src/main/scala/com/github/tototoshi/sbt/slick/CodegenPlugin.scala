@@ -3,7 +3,7 @@ package com.github.tototoshi.sbt.slick
 import sbt._
 import Keys._
 import slick.codegen.SourceCodeGenerator
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcProfile
 import slick.{ model => m }
 
 import scala.concurrent.Await
@@ -84,7 +84,7 @@ object CodegenPlugin extends sbt.AutoPlugin {
         throw new RuntimeException("Failed to run slick-codegen: " + e.getMessage, e)
     }
 
-    s.log.info(s"Generate source code with slick-codegen: url=${url}, user=${user}")
+    s.log.info(s"Generate source code with slick-codegen: url=$url, user=$user")
 
     val tables = driver.defaultTables
       .map(ts => ts.filter(t => included.isEmpty || (included contains t.name.name)))
@@ -111,12 +111,12 @@ object CodegenPlugin extends sbt.AutoPlugin {
     Await.result(database.run(dbio), Duration.Inf)
 
     val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
-    s.log.info(s"Source code has generated in ${generatedFile}")
+    s.log.info(s"Source code has generated in $generatedFile")
     file(generatedFile)
   }
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    slickCodegenDriver := slick.driver.PostgresDriver,
+    slickCodegenDriver := slick.jdbc.PostgresProfile,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",
     slickCodegenDatabaseUser := "Database user is not set",
@@ -138,15 +138,15 @@ object CodegenPlugin extends sbt.AutoPlugin {
         }
         folder.getPath
       }
-      val outPkg = (slickCodegenOutputPackage).value
-      val outFile = (slickCodegenOutputFile).value
+      val outPkg = slickCodegenOutputPackage.value
+      val outFile = slickCodegenOutputFile.value
       Seq(gen(
-        (slickCodegenCodeGenerator).value,
-        (slickCodegenDriver).value,
-        (slickCodegenJdbcDriver).value,
-        (slickCodegenDatabaseUrl).value,
-        (slickCodegenDatabaseUser).value,
-        (slickCodegenDatabasePassword).value,
+        slickCodegenCodeGenerator.value,
+        slickCodegenDriver.value,
+        slickCodegenJdbcDriver.value,
+        slickCodegenDatabaseUrl.value,
+        slickCodegenDatabaseUser.value,
+        slickCodegenDatabasePassword.value,
         outDir,
         outPkg,
         outFile,

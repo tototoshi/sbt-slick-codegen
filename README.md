@@ -6,6 +6,7 @@ slick-codegen compile hook for sbt
 
 |Slick version|slick-codegen version|
 |-------------|--------------|
+|3.2.x|1.3.1|
 |3.1.x|1.2.1|
 |3.0.x|1.1.1|
 

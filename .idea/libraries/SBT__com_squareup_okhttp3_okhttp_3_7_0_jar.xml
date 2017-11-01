@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: com.squareup.okhttp3:okhttp:3.7.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.squareup.okhttp3/okhttp/jars/okhttp-3.7.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.squareup.okhttp3/okhttp/srcs/okhttp-3.7.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

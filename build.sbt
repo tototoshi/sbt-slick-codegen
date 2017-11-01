@@ -1,6 +1,11 @@
-scalariformSettings
+// scalariformSettings
+import sbt.ScriptedPlugin.autoImport._
 
 sbtPlugin := true
+
+enablePlugins(sbt.ScriptedPlugin)
+
+scalaVersion := "2.12.4"
 
 name := """sbt-slick-codegen"""
 
@@ -11,8 +16,8 @@ version := "1.2.2-SNAPSHOT"
 val slickVersion = SettingKey[String]("slickVersion")
 
 slickVersion := {
-  if((sbtVersion in pluginCrossBuild).value.startsWith("1.0.")) {
-    "3.2.0"
+  if(!(sbtVersion in pluginCrossBuild).value.startsWith("0.")) {
+    "3.2.1"
   } else {
     "3.1.0"
   }
@@ -54,15 +59,13 @@ pomExtra :=
     </developer>
   </developers>
 
-ScriptedPlugin.scriptedSettings
 
-ScriptedPlugin.scriptedBufferLog := false
-
-ScriptedPlugin.scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
+scriptedBufferLog := false
+scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
   a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
 )
 
-ScriptedPlugin.scriptedLaunchOpts ++= Seq(
+scriptedLaunchOpts ++= Seq(
   "-Dplugin.version=" + version.value,
   "-Dslick.version=" + slickVersion.value
 )

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: com.trueaccord.scalapb:scalapb-runtime_2.12:0.6.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.trueaccord.scalapb/scalapb-runtime_2.12/jars/scalapb-runtime_2.12-0.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.trueaccord.scalapb/scalapb-runtime_2.12/srcs/scalapb-runtime_2.12-0.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

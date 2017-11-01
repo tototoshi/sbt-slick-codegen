@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.scala-sbt:zinc-apiinfo_2.12:1.0.1:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-sbt/zinc-apiinfo_2.12/jars/zinc-apiinfo_2.12-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-sbt/zinc-apiinfo_2.12/srcs/zinc-apiinfo_2.12-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: org.scala-sbt:completion_2.12:1.0.2:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-sbt/completion_2.12/jars/completion_2.12-1.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-sbt/completion_2.12/srcs/completion_2.12-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

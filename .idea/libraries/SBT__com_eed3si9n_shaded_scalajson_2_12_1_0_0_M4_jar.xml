@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: com.eed3si9n:shaded-scalajson_2.12:1.0.0-M4:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.eed3si9n/shaded-scalajson_2.12/jars/shaded-scalajson_2.12-1.0.0-M4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.eed3si9n/shaded-scalajson_2.12/srcs/shaded-scalajson_2.12-1.0.0-M4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

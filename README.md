@@ -1,5 +1,7 @@
 # sbt-slick-codegen
 
+![travis-ci](https://travis-ci.org/tototoshi/sbt-slick-codegen.svg?branch=master)
+
 slick-codegen compile hook for sbt
 
 ## Install

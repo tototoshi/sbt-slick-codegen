@@ -6,12 +6,14 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
+crossSbtVersions := Seq("0.13.17", "1.1.0")
+
 version := "1.2.2-SNAPSHOT"
 
 val slickVersion = SettingKey[String]("slickVersion")
 
 slickVersion := {
-  if((sbtVersion in pluginCrossBuild).value.startsWith("1.0.")) {
+  if((sbtVersion in pluginCrossBuild).value.startsWith("1.")) {
     "3.2.0"
   } else {
     "3.1.0"

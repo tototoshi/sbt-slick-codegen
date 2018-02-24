@@ -14,7 +14,7 @@ val slickVersion = SettingKey[String]("slickVersion")
 
 slickVersion := {
   if((sbtVersion in pluginCrossBuild).value.startsWith("1.")) {
-    "3.2.0"
+    "3.2.1"
   } else {
     "3.1.0"
   }

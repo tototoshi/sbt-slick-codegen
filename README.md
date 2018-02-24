@@ -6,10 +6,11 @@ slick-codegen compile hook for sbt
 
 ## Install
 
-|Slick version|slick-codegen version|
-|-------------|--------------|
-|3.1.x|1.2.1|
-|3.0.x|1.1.1|
+|Slick version|slick-codegen version|sbt version|
+|-------------|---------------------|-----------|
+|        3.2.x|                1.3.0|        1.x|
+|        3.1.x|                1.2.1|     0.13.x|
+|        3.0.x|                1.1.1|     0.13.x|
 
 
 ```scala

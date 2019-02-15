@@ -23,5 +23,5 @@ cache:
   - $HOME/.sbt/launchers
 env:
   matrix:
-  - SBT_VERSION="0.13.16"
-  - SBT_VERSION="1.1.0"
+  - SBT_VERSION="0.13.18"
+  - SBT_VERSION="1.2.8"

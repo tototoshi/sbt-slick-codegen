@@ -15,7 +15,7 @@ organization := "com.github.tototoshi"
 
 crossSbtVersions := Seq("0.13.18", "1.2.8")
 
-version := "1.4.0-SNAPSHOT"
+version := "1.4.0"
 
 val slickVersion = SettingKey[String]("slickVersion")
 
@@ -43,11 +43,11 @@ publishTo := {
 publishArtifact in Test := false
 
 pomExtra :=
-  <url>http://github.com/tototoshi/sbt-slick-codegen</url>
+  <url>https://github.com/tototoshi/sbt-slick-codegen</url>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -59,7 +59,7 @@ pomExtra :=
     <developer>
       <id>tototoshi</id>
       <name>Toshiyuki Takahashi</name>
-      <url>http://tototoshi.github.io</url>
+      <url>https://tototoshi.github.io</url>
     </developer>
   </developers>
 

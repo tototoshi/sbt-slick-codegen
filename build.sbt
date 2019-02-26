@@ -1,4 +1,11 @@
-scalariformSettings
+import scalariform.formatter.preferences._
+
+enablePlugins(ScriptedPlugin)
+
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(DoubleIndentConstructorArguments, true)
+  .setPreference(DanglingCloseParenthesis, Preserve)
 
 sbtPlugin := true
 
@@ -56,15 +63,12 @@ pomExtra :=
     </developer>
   </developers>
 
-ScriptedPlugin.scriptedSettings
 
-ScriptedPlugin.scriptedBufferLog := false
-
-ScriptedPlugin.scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
+scriptedBufferLog := false
+scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
   a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
 )
-
-ScriptedPlugin.scriptedLaunchOpts ++= Seq(
+scriptedLaunchOpts ++= Seq(
   "-Dplugin.version=" + version.value,
   "-Dslick.version=" + slickVersion.value
 )

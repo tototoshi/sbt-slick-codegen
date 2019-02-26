@@ -1,4 +1,6 @@
 import scalariform.formatter.preferences._
+import scala.collection.JavaConverters._
+import java.lang.management.ManagementFactory
 
 enablePlugins(ScriptedPlugin)
 
@@ -65,7 +67,7 @@ pomExtra :=
 
 
 scriptedBufferLog := false
-scriptedLaunchOpts ++= sys.process.javaVmArguments.filter(
+scriptedLaunchOpts ++= ManagementFactory.getRuntimeMXBean.getInputArguments.asScala.toList.filter(
   a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
 )
 scriptedLaunchOpts ++= Seq(

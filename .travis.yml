@@ -7,6 +7,7 @@ addons:
     - oracle-java8-installer
 jdk:
 - oraclejdk8
+- openjdk11
 before_script:
 - psql -c "CREATE ROLE test WITH SUPERUSER LOGIN PASSWORD 'test';" -U postgres
 - psql -c "CREATE DATABASE example;" -U postgres

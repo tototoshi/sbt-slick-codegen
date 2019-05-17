@@ -32,10 +32,10 @@ abstract class AbstractSourceCodeGenerator(jsValue: JsObject)
 
           case (key, jsValue) =>
 
-            val className = getClassName(key)
-            val fieldName = key.split("_").lastOption.mkString
-            val fieldType = getFieldType(key, jsValue)
-            val jsonParserName = prefixedField(key, jsonPrefix)
+            val className       = getClassName(key)
+            val fieldName       = key.split("_").lastOption.mkString
+            val fieldType       = getFieldType(key, jsValue)
+            val jsonParserName  = prefixedField(key, jsonPrefix)
 
             val classProperty =
               Map(className -> List((fieldName, fieldType, jsonParserName)))

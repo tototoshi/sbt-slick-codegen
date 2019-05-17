@@ -14,14 +14,17 @@ trait OutputHelpers {
    * @group Output
    */
   def writeStringToFile(
-    content: String,
-    folder: String,
-    pkg: String,
+    content:  String,
+    folder:   String,
+    pkg:      String,
     fileName: String): Unit = {
+
     val folder2: String = folder + "/" + pkg.replace(".", "/") + "/"
     new File(folder2).mkdirs()
+
     val fileLocation = s"$folder2$fileName"
-    val file = new File(fileLocation)
+    val file         = new File(fileLocation)
+
     if (!file.exists()) {
       file.createNewFile()
     }

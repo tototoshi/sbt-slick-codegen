@@ -20,9 +20,9 @@ object ElasticSourceCodeGenerator {
     fileName: String,
     pkg: String): String = {
 
-    val result = scala.io.Source.fromURL(s"$elasticUrl/$index?pretty").mkString
-    val json = Json.parse(result)
-    val mappings = (json \ index \ "mappings").as[JsObject]
+    val result    = scala.io.Source.fromURL(s"$elasticUrl/$index?pretty").mkString
+    val json      = Json.parse(result)
+    val mappings  = (json \ index \ "mappings").as[JsObject]
 
     val generator = new ElasticSourceCodeGenerator(mappings)
     generator.generateCode(pkg)

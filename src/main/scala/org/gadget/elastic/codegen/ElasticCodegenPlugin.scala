@@ -33,12 +33,12 @@ object ElasticCodegenPlugin extends sbt.AutoPlugin with OutputHelpers {
   import autoImport._
 
   private def gen(
-    url: String,
+    url:       String,
     outputDir: String,
-    index: String,
-    pkg: String,
-    fileName: String,
-    s: TaskStreams): File = {
+    index:     String,
+    pkg:       String,
+    fileName:  String,
+    s:         TaskStreams): File = {
 
     s.log.info(s"Generate source code with elastic-codegen: url = ${url}")
     s.log.info(s"writing file ${fileName} to ${outputDir} ")
@@ -56,30 +56,33 @@ object ElasticCodegenPlugin extends sbt.AutoPlugin with OutputHelpers {
   }
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    elasticCodegenOutputDir := (sourceManaged in Compile).value,
-    elasticUrl := "elastic url is not set",
-    elasticIndex := "elastic index is not set",
-    elasticCodegenOutputFile := "Elastic.scala",
-    elasticCodegenOutputPackage := "com.example",
-    elasticCodeGen := {
+    elasticCodegenOutputDir     :=  (sourceManaged in Compile).value,
+    elasticUrl                  :=  "elastic url is not set",
+    elasticIndex                :=  "elastic index is not set",
+    elasticCodegenOutputFile    :=  "Elastic.scala",
+    elasticCodegenOutputPackage :=  "com.example",
+    elasticCodeGen              :=  {
+
       val outDir = {
-        val folder = elasticCodegenOutputDir.value
-        if (folder.exists()) {
-          require(folder.isDirectory, s"file :[$folder] is not a directory")
-        } else {
-          folder.mkdir()
-        }
+
+        val folder =            elasticCodegenOutputDir.value
+
+        if (folder.exists())    require(folder.isDirectory, s"file :[$folder] is not a directory")
+        else                    folder.mkdir()
+
         folder.getPath
       }
-      val outPkg = elasticCodegenOutputPackage.value
+
+      val outPkg  = elasticCodegenOutputPackage.value
       val outFile = elasticCodegenOutputFile.value
       Seq(gen(
-        url = elasticUrl.value,
+        url       = elasticUrl.value,
         outputDir = outDir,
-        index = elasticIndex.value,
-        pkg = outPkg,
-        fileName = outFile,
-        s = streams.value))
+        index     = elasticIndex.value,
+        pkg       = outPkg,
+        fileName  = outFile,
+        s         = streams.value)
+      )
     })
 
 }

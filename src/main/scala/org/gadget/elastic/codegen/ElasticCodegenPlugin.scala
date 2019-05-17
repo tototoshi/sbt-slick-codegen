@@ -9,7 +9,7 @@ import Keys._
  * @author npersad on 2019-05-16
  *
  */
-object CodegenPlugin extends sbt.AutoPlugin with OutputHelpers {
+object ElasticCodegenPlugin extends sbt.AutoPlugin with OutputHelpers {
 
   object autoImport {
     lazy val elasticCodeGen: TaskKey[Seq[File]] = taskKey[Seq[File]]("Command to run codegen")

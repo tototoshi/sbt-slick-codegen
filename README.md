@@ -12,9 +12,9 @@ https://github.com/npersad/elastic-codegen/wiki
 
 ## Install
 
-|slick-codegen version|sbt version|
+|play-json            |sbt version|
 |---------------------|-----------|
-|                1.0.0|      1.2.x|
+|               2.6.10|      1.2.x|
 
 
 ```scala

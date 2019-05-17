@@ -7,7 +7,7 @@ This plugin allows you to create case classes that engender parent child-relatio
 This is achievable with a simple naming conventino of the form `<level name>_<field>`.  
 
 
-Please see the wiki for a detailed explanation of this plugin
+Please see the wiki for a detailed motivation of this plugin
 https://github.com/npersad/elastic-codegen/wiki
 
 ## Install

@@ -1,6 +1,9 @@
-/RUNNING_PID
-/logs/
-/project/*-shim.sbt
-/project/project/
-/project/target/
-/target/
+/.idea
+target
+/project/project
+/project/target
+/.scalafmt.conf
+/scalastyle-config.xml
+
+.DS_Store
+*~

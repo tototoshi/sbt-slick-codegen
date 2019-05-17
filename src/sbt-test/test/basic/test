@@ -1,5 +1,0 @@
-$ exec psql -c "create table users (id bigint primary key, name varchar(256));" -U postgres
-> compile
-
-$ exists target/scala-2.11/src_managed/main/com/example/Tables.scala
-$ exists target/scala-2.11/classes/com/example/Tables.class

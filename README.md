@@ -4,7 +4,7 @@ elastic-codegen compile hook for sbt
 
 ## Motivation
 This plugin allows you to create case classes that engender parent child-relationships (joins) that elastic search discourages while at the same time writiing json objects that maintain the denormalized structure that elastic stresses.
-This is achievable with a simple naming conventino of the form `<level name>_<field>`.  
+This is achievable with a simple naming convention of the form `<level name>_<field>`.  
 
 
 Please see the wiki for a detailed motivation of this plugin

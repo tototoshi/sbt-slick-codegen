@@ -2,11 +2,9 @@ language: scala
 sudo: false
 addons:
   postgresql: "9.4"
-  apt:
-    packages:
-    - oracle-java8-installer
+dist: xenial
 jdk:
-- oraclejdk8
+- openjdk8
 - openjdk11
 before_script:
 - psql -c "CREATE ROLE test WITH SUPERUSER LOGIN PASSWORD 'test';" -U postgres

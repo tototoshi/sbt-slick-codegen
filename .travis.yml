@@ -23,4 +23,4 @@ cache:
 env:
   matrix:
   - SBT_VERSION="0.13.18"
-  - SBT_VERSION="1.2.8"
+  - SBT_VERSION="1.4.7"

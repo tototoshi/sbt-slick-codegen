@@ -1,6 +1,6 @@
 # sbt-slick-codegen
 
-![travis-ci](https://travis-ci.org/tototoshi/sbt-slick-codegen.svg?branch=master)
+[![CI](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/ci.yml/badge.svg)](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/ci.yml)
 
 slick-codegen compile hook for sbt
 

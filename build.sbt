@@ -17,7 +17,7 @@ organization := "com.github.tototoshi"
 
 crossSbtVersions := Seq("0.13.18", "1.2.8")
 
-version := "1.4.0"
+version := "1.4.1-SNAPSHOT"
 
 val slickVersion = SettingKey[String]("slickVersion")
 

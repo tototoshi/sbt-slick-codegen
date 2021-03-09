@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - sbt_version: "1.4.7"
+          - sbt_version: "0.13.18"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run tests
+      run: SBT_VERSION="${{ matrix.sbt_version }}" make test

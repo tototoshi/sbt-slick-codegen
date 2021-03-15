@@ -14,3 +14,7 @@ up:
 
 down:
 	docker-compose down
+
+sbt:
+	curl -Ls https://git.io/sbt > sbt
+	chmod +x ./sbt

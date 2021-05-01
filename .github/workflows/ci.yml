@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - sbt_version: "1.4.9"
+          - sbt_version: "1.5.1"
           - sbt_version: "0.13.18"
 
     steps:

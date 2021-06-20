@@ -15,7 +15,7 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-crossSbtVersions := Seq("0.13.18", "1.5.3")
+crossSbtVersions := Seq("0.13.18", "1.5.4")
 
 version := "1.4.1-SNAPSHOT"
 

@@ -1,16 +1,16 @@
-FROM centos:8
+FROM debian:buster-slim
 
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-RUN yum update -y && \
-    yum install -y glibc-locale-source && \
-    yum clean all
+RUN apt-get update
+RUN apt-get -y install locales-all
 
-RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
-RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
 
-ENV LANG=ja_JP.UTF-8
-ENV TZ="Asia/Tokyo"
-
-RUN yum install -y postgresql java-1.8.0-openjdk
+RUN apt-get update && \
+    apt-get install -y build-essential \
+                       openjdk-11-jdk \
+                       curl 
+RUN apt-get install -y postgresql                       
 
 CMD "/bin/bash"

@@ -3,7 +3,7 @@ package com.github.tototoshi.sbt.slick
 import sbt._
 import Keys._
 import slick.codegen.SourceCodeGenerator
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcProfile
 import slick.{ model => m }
 
 import scala.concurrent.Await
@@ -49,7 +49,9 @@ object CodegenPlugin extends sbt.AutoPlugin {
       settingKey[Seq[String]]("Tables that should be excluded")
 
     lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
-      settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
+      settingKey[Seq[String]](
+        "Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken."
+      )
 
     lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
       new SourceCodeGenerator(model)
@@ -73,7 +75,8 @@ object CodegenPlugin extends sbt.AutoPlugin {
     container: String,
     excluded: Seq[String],
     included: Seq[String],
-    s: TaskStreams): File = {
+    s: TaskStreams
+  ): File = {
 
     val database = driver.api.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
 
@@ -116,14 +119,14 @@ object CodegenPlugin extends sbt.AutoPlugin {
   }
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    slickCodegenDriver := slick.driver.PostgresDriver,
+    slickCodegenDriver := slick.jdbc.PostgresProfile,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",
     slickCodegenDatabaseUser := "Database user is not set",
     slickCodegenDatabasePassword := "Database password is not set",
     slickCodegenOutputPackage := "com.example",
     slickCodegenOutputFile := "Tables.scala",
-    slickCodegenOutputDir := (sourceManaged in Compile).value,
+    slickCodegenOutputDir := (Compile / sourceManaged).value,
     slickCodegenOutputContainer := "Tables",
     slickCodegenExcludedTables := Seq(),
     slickCodegenIncludedTables := Seq(),
@@ -140,21 +143,23 @@ object CodegenPlugin extends sbt.AutoPlugin {
       }
       val outPkg = (slickCodegenOutputPackage).value
       val outFile = (slickCodegenOutputFile).value
-      Seq(gen(
-        (slickCodegenCodeGenerator).value,
-        (slickCodegenDriver).value,
-        (slickCodegenJdbcDriver).value,
-        (slickCodegenDatabaseUrl).value,
-        (slickCodegenDatabaseUser).value,
-        (slickCodegenDatabasePassword).value,
-        outDir,
-        outPkg,
-        outFile,
-        slickCodegenOutputContainer.value,
-        slickCodegenExcludedTables.value,
-        slickCodegenIncludedTables.value,
-        streams.value
-      ))
+      Seq(
+        gen(
+          (slickCodegenCodeGenerator).value,
+          (slickCodegenDriver).value,
+          (slickCodegenJdbcDriver).value,
+          (slickCodegenDatabaseUrl).value,
+          (slickCodegenDatabaseUser).value,
+          (slickCodegenDatabasePassword).value,
+          outDir,
+          outPkg,
+          outFile,
+          slickCodegenOutputContainer.value,
+          slickCodegenExcludedTables.value,
+          slickCodegenIncludedTables.value,
+          streams.value
+        )
+      )
     }
   )
 

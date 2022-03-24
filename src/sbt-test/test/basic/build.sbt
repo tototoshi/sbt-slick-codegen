@@ -1,11 +1,6 @@
-crossScalaVersions := Seq("2.11.12")
+crossScalaVersions := Seq("2.12.15", "2.13.8")
 
-crossScalaVersions ++= {
-  if (sbtVersion.value startsWith "1.")
-    Seq("2.12.8", "2.13.0")
-  else
-    Nil
-}
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 libraryDependencies += "com.typesafe.slick" %% "slick" % System.getProperty("slick.version")
 
@@ -13,7 +8,7 @@ enablePlugins(CodegenPlugin)
 
 Compile / sourceGenerators += slickCodegen
 
-slickCodegenDatabaseUrl := "jdbc:postgresql://localhost/example"
+slickCodegenDatabaseUrl := "jdbc:postgresql://postgres/example"
 
 slickCodegenDatabaseUser := "test"
 

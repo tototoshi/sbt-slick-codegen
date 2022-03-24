@@ -80,7 +80,7 @@ object CodegenPlugin extends sbt.AutoPlugin {
     excluded: Seq[String],
     included: Seq[String],
     s: TaskStreams
-  ): File = {
+  ): Seq[File] = {
 
     val database = driver.api.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
 
@@ -129,9 +129,15 @@ object CodegenPlugin extends sbt.AutoPlugin {
 
     Await.result(database.run(dbio), Duration.Inf)
 
-    val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
-    s.log.info(s"Source code has generated in ${generatedFile}")
-    file(generatedFile)
+    if (outputToMultipleFiles) {
+      val outDir = file(outputDir)
+      s.log.info(s"Source code files have been generated in ${outDir.getAbsolutePath}")
+      outDir.listFiles().filter(_.getName.endsWith(".scala")).toSeq
+    } else {
+      val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+      s.log.info(s"Source code has generated in ${generatedFile}")
+      Seq(file(generatedFile))
+    }
   }
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
@@ -161,23 +167,21 @@ object CodegenPlugin extends sbt.AutoPlugin {
       val outPkg = (slickCodegenOutputPackage).value
       val outFile = (slickCodegenOutputFile).value
       val outputToMultipleFiles = slickCodegenOutputToMultipleFiles.value
-      Seq(
-        gen(
-          (slickCodegenCodeGenerator).value,
-          (slickCodegenDriver).value,
-          (slickCodegenJdbcDriver).value,
-          (slickCodegenDatabaseUrl).value,
-          (slickCodegenDatabaseUser).value,
-          (slickCodegenDatabasePassword).value,
-          outDir,
-          outPkg,
-          outFile,
-          outputToMultipleFiles,
-          slickCodegenOutputContainer.value,
-          slickCodegenExcludedTables.value,
-          slickCodegenIncludedTables.value,
-          streams.value
-        )
+      gen(
+        (slickCodegenCodeGenerator).value,
+        (slickCodegenDriver).value,
+        (slickCodegenJdbcDriver).value,
+        (slickCodegenDatabaseUrl).value,
+        (slickCodegenDatabaseUser).value,
+        (slickCodegenDatabasePassword).value,
+        outDir,
+        outPkg,
+        outFile,
+        outputToMultipleFiles,
+        slickCodegenOutputContainer.value,
+        slickCodegenExcludedTables.value,
+        slickCodegenIncludedTables.value,
+        streams.value
       )
     }
   )

@@ -1,5 +1,9 @@
-$ exec psql -c 'create table users (id bigint primary key, name varchar(256));' -U test -h postgres example
+$ exec psql -c 'create table if not exists users (id bigint primary key, name varchar(256));' -U test -h localhost example
+> slickCodegen
+$ pause
 > + compile
 
 $ exists target/scala-2.11/src_managed/main/com/example/Tables.scala
 $ exists target/scala-2.11/classes/com/example/Tables.class
+$ exists target/scala-2.11/src_managed/main/com/example/Users.scala
+$ exists target/scala-2.11/classes/com/example/Users.class

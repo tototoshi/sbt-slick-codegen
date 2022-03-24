@@ -11,10 +11,12 @@ libraryDependencies += "com.typesafe.slick" %% "slick" % System.getProperty("sli
 
 enablePlugins(CodegenPlugin)
 
-sourceGenerators in Compile += slickCodegen
+Compile / sourceGenerators += slickCodegen
 
-slickCodegenDatabaseUrl := "jdbc:postgresql://postgres/example"
+slickCodegenDatabaseUrl := "jdbc:postgresql://localhost/example"
 
 slickCodegenDatabaseUser := "test"
 
 slickCodegenDatabasePassword := "test"
+
+slickCodegenOutputToMultipleFiles := true

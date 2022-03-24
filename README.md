@@ -69,6 +69,9 @@ slickCodegenExcludedTables in Compile := Seq("schema_version")
 
 //optional
 slickCodegenOutputDir := (sourceManaged in Compile).value
+
+//optional. Generate one Scala file per table.
+slickCodegenOutputToMultipleFiles := false
 ```
 
 ## Example

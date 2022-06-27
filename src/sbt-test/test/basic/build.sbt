@@ -13,7 +13,7 @@ enablePlugins(CodegenPlugin)
 
 sourceGenerators in Compile += slickCodegen
 
-slickCodegenDatabaseUrl := "jdbc:postgresql://localhost/example"
+slickCodegenDatabaseUrl := "jdbc:postgresql://postgres/example"
 
 slickCodegenDatabaseUser := "test"
 

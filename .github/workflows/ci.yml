@@ -15,7 +15,6 @@ jobs:
       matrix:
         include:
           - sbt_version: "1.6.2"
-          - sbt_version: "0.13.18"
 
     steps:
     - uses: actions/checkout@v2

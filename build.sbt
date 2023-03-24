@@ -15,19 +15,11 @@ name := """sbt-slick-codegen"""
 
 organization := "com.github.tototoshi"
 
-crossSbtVersions := Seq("0.13.18", "1.6.2")
-
-version := "1.4.1-SNAPSHOT"
+crossSbtVersions := Seq("1.8.0")
 
 val slickVersion = SettingKey[String]("slickVersion")
 
-slickVersion := {
-  if ((pluginCrossBuild / sbtVersion).value.startsWith("1.")) {
-    "3.3.3"
-  } else {
-    "3.1.0"
-  }
-}
+slickVersion := "3.3.3"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion.value,

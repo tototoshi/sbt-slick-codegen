@@ -133,7 +133,7 @@ object CodegenPlugin extends sbt.AutoPlugin {
     if (outputToMultipleFiles) {
       val outDir = file(outputDir)
       s.log.info(s"Source code files have been generated in ${outDir.getAbsolutePath}")
-      var buf = new ListBuffer[File]()
+      val buf = new ListBuffer[File]()
       def addFiles(dir: File): Unit = {
         dir.listFiles().foreach { f =>
           if (f.isDirectory) { addFiles(f) }

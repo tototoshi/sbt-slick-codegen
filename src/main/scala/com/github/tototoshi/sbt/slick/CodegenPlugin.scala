@@ -3,7 +3,7 @@ package com.github.tototoshi.sbt.slick
 import sbt._
 import Keys._
 import slick.codegen.SourceCodeGenerator
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcProfile
 import slick.{ model => m }
 
 import scala.concurrent.Await
@@ -36,6 +36,9 @@ object CodegenPlugin extends sbt.AutoPlugin {
     lazy val slickCodegenOutputFile: SettingKey[String] =
       settingKey[String]("Generated file")
 
+    lazy val slickCodegenOutputToMultipleFiles: SettingKey[Boolean] =
+      settingKey[Boolean]("Write generated code to multiple files instead of a single file")
+
     lazy val slickCodegenOutputDir: SettingKey[File] =
       settingKey[File]("Folder where the generated file lives in")
 
@@ -49,7 +52,9 @@ object CodegenPlugin extends sbt.AutoPlugin {
       settingKey[Seq[String]]("Tables that should be excluded")
 
     lazy val slickCodegenIncludedTables: SettingKey[Seq[String]] =
-      settingKey[Seq[String]]("Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken.")
+      settingKey[Seq[String]](
+        "Tables that should be included. If this list is not nil, only the included tables minus excluded will be taken."
+      )
 
     lazy val defaultSourceCodeGenerator: m.Model => SourceCodeGenerator = (model: m.Model) =>
       new SourceCodeGenerator(model)
@@ -70,10 +75,12 @@ object CodegenPlugin extends sbt.AutoPlugin {
     outputDir: String,
     pkg: String,
     fileName: String,
+    outputToMultipleFiles: Boolean,
     container: String,
     excluded: Seq[String],
     included: Seq[String],
-    s: TaskStreams): File = {
+    s: TaskStreams
+  ): Seq[File] = {
 
     val database = driver.api.Database.forURL(url = url, driver = jdbcDriver, user = user, password = password)
 
@@ -100,30 +107,49 @@ object CodegenPlugin extends sbt.AutoPlugin {
 
     val dbio = for {
       m <- driver.createModel(Some(tables))
-    } yield generator(m).writeToFile(
-      profile = profile,
-      folder = outputDir,
-      pkg = pkg,
-      container = container,
-      fileName = fileName
-    )
+    } yield {
+      val sourceGen = generator(m)
+      if (outputToMultipleFiles) {
+        sourceGen.writeToMultipleFiles(
+          profile = profile,
+          folder = outputDir,
+          pkg = pkg,
+          container = container
+        )
+      } else {
+        sourceGen.writeToFile(
+          profile = profile,
+          folder = outputDir,
+          pkg = pkg,
+          container = container,
+          fileName = fileName
+        )
+      }
+    }
 
     Await.result(database.run(dbio), Duration.Inf)
 
-    val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
-    s.log.info(s"Source code has generated in ${generatedFile}")
-    file(generatedFile)
+    if (outputToMultipleFiles) {
+      val outDir = file(outputDir)
+      s.log.info(s"Source code files have been generated in ${outDir.getAbsolutePath}")
+      outDir.listFiles().filter(_.getName.endsWith(".scala")).toSeq
+    } else {
+      val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+      s.log.info(s"Source code has generated in ${generatedFile}")
+      Seq(file(generatedFile))
+    }
   }
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    slickCodegenDriver := slick.driver.PostgresDriver,
+    slickCodegenDriver := slick.jdbc.PostgresProfile,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",
     slickCodegenDatabaseUser := "Database user is not set",
     slickCodegenDatabasePassword := "Database password is not set",
     slickCodegenOutputPackage := "com.example",
     slickCodegenOutputFile := "Tables.scala",
-    slickCodegenOutputDir := (sourceManaged in Compile).value,
+    slickCodegenOutputToMultipleFiles := false,
+    slickCodegenOutputDir := (Compile / sourceManaged).value,
     slickCodegenOutputContainer := "Tables",
     slickCodegenExcludedTables := Seq(),
     slickCodegenIncludedTables := Seq(),
@@ -140,7 +166,8 @@ object CodegenPlugin extends sbt.AutoPlugin {
       }
       val outPkg = (slickCodegenOutputPackage).value
       val outFile = (slickCodegenOutputFile).value
-      Seq(gen(
+      val outputToMultipleFiles = slickCodegenOutputToMultipleFiles.value
+      gen(
         (slickCodegenCodeGenerator).value,
         (slickCodegenDriver).value,
         (slickCodegenJdbcDriver).value,
@@ -150,11 +177,12 @@ object CodegenPlugin extends sbt.AutoPlugin {
         outDir,
         outPkg,
         outFile,
+        outputToMultipleFiles,
         slickCodegenOutputContainer.value,
         slickCodegenExcludedTables.value,
         slickCodegenIncludedTables.value,
         streams.value
-      ))
+      )
     }
   )
 

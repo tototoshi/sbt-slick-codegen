@@ -2,7 +2,7 @@ import scalariform.formatter.preferences._
 import scala.collection.JavaConverters._
 import java.lang.management.ManagementFactory
 
-enablePlugins(ScriptedPlugin)
+enablePlugins(SbtPlugin)
 
 scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
@@ -22,8 +22,8 @@ version := "1.4.1-SNAPSHOT"
 val slickVersion = SettingKey[String]("slickVersion")
 
 slickVersion := {
-  if((sbtVersion in pluginCrossBuild).value.startsWith("1.")) {
-    "3.3.2"
+  if ((pluginCrossBuild / sbtVersion).value.startsWith("1.")) {
+    "3.3.3"
   } else {
     "3.1.0"
   }
@@ -42,7 +42,7 @@ publishTo := {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomExtra :=
   <url>https://github.com/tototoshi/sbt-slick-codegen</url>
@@ -65,10 +65,9 @@ pomExtra :=
     </developer>
   </developers>
 
-
 scriptedBufferLog := false
-scriptedLaunchOpts ++= ManagementFactory.getRuntimeMXBean.getInputArguments.asScala.toList.filter(
-  a => Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
+scriptedLaunchOpts ++= ManagementFactory.getRuntimeMXBean.getInputArguments.asScala.toList.filter(a =>
+  Seq("-Xmx", "-Xms", "-XX", "-Dsbt.log.noformat").exists(a.startsWith)
 )
 scriptedLaunchOpts ++= Seq(
   "-Dplugin.version=" + version.value,

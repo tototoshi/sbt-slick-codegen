@@ -9,6 +9,7 @@ import slick.{ model => m }
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+import scala.collection.mutable.ListBuffer
 
 object CodegenPlugin extends sbt.AutoPlugin {
 
@@ -132,7 +133,15 @@ object CodegenPlugin extends sbt.AutoPlugin {
     if (outputToMultipleFiles) {
       val outDir = file(outputDir)
       s.log.info(s"Source code files have been generated in ${outDir.getAbsolutePath}")
-      outDir.listFiles().filter(_.getName.endsWith(".scala")).toSeq
+      var buf = new ListBuffer[File]()
+      def addFiles(dir: File): Unit = {
+        dir.listFiles().foreach { f =>
+          if (f.isDirectory) { addFiles(f) }
+          else if (f.getName.endsWith(".scala")) { buf += f }
+        }
+      }
+      addFiles(outDir)
+      buf.toSeq
     } else {
       val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
       s.log.info(s"Source code has generated in ${generatedFile}")

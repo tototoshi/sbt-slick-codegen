@@ -21,7 +21,7 @@ crossSbtVersions := Seq("1.8.0")
 
 val slickVersion = SettingKey[String]("slickVersion")
 
-slickVersion := "3.5.0"
+slickVersion := "3.5.1"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion.value,

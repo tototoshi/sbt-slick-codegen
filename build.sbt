@@ -1,13 +1,7 @@
-import scalariform.formatter.preferences._
 import scala.collection.JavaConverters._
 import java.lang.management.ManagementFactory
 
 enablePlugins(SbtPlugin)
-
-scalariformPreferences := scalariformPreferences.value
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(DoubleIndentConstructorArguments, true)
-  .setPreference(DanglingCloseParenthesis, Preserve)
 
 sbtPlugin := true
 

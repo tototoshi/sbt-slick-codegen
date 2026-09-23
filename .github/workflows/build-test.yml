@@ -12,8 +12,8 @@ jobs:
     uses: playframework/.github/.github/workflows/cmd.yml@v3
     with:
       java: 17, 11, 8
-      scala: 2.12.21, 3.8.3
+      scala: 2.12.21, 3.9.0
       # Scala 3.8.x compiler bridge requires Java 17.
-      exclude: '[{"java": "8", "scala": "3.8.3"}, {"java": "11", "scala": "3.8.3"}]'
+      exclude: '[{"java": "8", "scala": "3.9.0"}, {"java": "11", "scala": "3.9.0"}]'
       cmd: |
         sbt ++$MATRIX_SCALA test scripted

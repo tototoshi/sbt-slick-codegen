@@ -2,7 +2,7 @@ import scala.collection.JavaConverters._
 import java.lang.management.ManagementFactory
 
 lazy val scala212 = "2.12.21"
-lazy val scala3 = "3.8.3"
+lazy val scala3 = "3.9.0"
 
 ThisBuild / scalaVersion := scala212
 ThisBuild / crossScalaVersions := Seq(scala212, scala3)
@@ -17,12 +17,12 @@ organization := "com.github.tototoshi"
 
 version := "2.2.0"
 
-crossSbtVersions := Seq("1.12.9", "2.0.0-RC11")
+crossSbtVersions := Seq("1.12.9", "2.1.0-M2")
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" => "1.12.9"
-    case _      => "2.0.0-RC11"
+    case _      => "2.1.0-M2"
   }
 }
 
@@ -35,7 +35,7 @@ scalacOptions ++= {
 
 val slickVersion = SettingKey[String]("slickVersion")
 
-slickVersion := "3.5.0"
+slickVersion := "3.6.1"
 
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % slickVersion.value,

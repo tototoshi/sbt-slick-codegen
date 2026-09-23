@@ -4,5 +4,5 @@ sys.props.get("plugin.version") match {
                          |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
 }
 
-libraryDependencies += "com.h2database" % "h2" % "2.3.232"
+libraryDependencies += "com.h2database" % "h2" % "2.2.224"
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.25"

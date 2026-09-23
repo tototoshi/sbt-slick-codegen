@@ -4,5 +4,5 @@ sys.props.get("plugin.version") match {
                          |Specify this property using the scriptedLaunchOpts -D.""".stripMargin)
 }
 
-libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
+libraryDependencies += "com.h2database" % "h2" % "2.3.232"
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.7.25"

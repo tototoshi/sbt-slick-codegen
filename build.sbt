@@ -1,13 +1,13 @@
-import scalariform.formatter.preferences._
 import scala.collection.JavaConverters._
 import java.lang.management.ManagementFactory
 
-enablePlugins(SbtPlugin)
+lazy val scala212 = "2.12.21"
+lazy val scala3 = "3.8.3"
 
-scalariformPreferences := scalariformPreferences.value
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(DoubleIndentConstructorArguments, true)
-  .setPreference(DanglingCloseParenthesis, Preserve)
+ThisBuild / scalaVersion := scala212
+ThisBuild / crossScalaVersions := Seq(scala212, scala3)
+
+enablePlugins(SbtPlugin)
 
 sbtPlugin := true
 
@@ -17,7 +17,21 @@ organization := "com.github.tototoshi"
 
 version := "2.2.0"
 
-crossSbtVersions := Seq("1.8.0")
+crossSbtVersions := Seq("1.12.9", "2.0.0-RC11")
+
+pluginCrossBuild / sbtVersion := {
+  scalaBinaryVersion.value match {
+    case "2.12" => "1.12.9"
+    case _      => "2.0.0-RC11"
+  }
+}
+
+scalacOptions ++= {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => Seq("-Xsource:3")
+    case _            => Seq.empty
+  }
+}
 
 val slickVersion = SettingKey[String]("slickVersion")
 

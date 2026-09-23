@@ -14,6 +14,7 @@ import scala.collection.mutable.ListBuffer
 object CodegenPlugin extends sbt.AutoPlugin {
 
   object autoImport {
+    @transient
     lazy val slickCodegen: TaskKey[Seq[File]] = taskKey[Seq[File]]("Command to run codegen")
 
     lazy val slickCodegenDatabaseUrl: SettingKey[String] =
@@ -61,7 +62,7 @@ object CodegenPlugin extends sbt.AutoPlugin {
       new SourceCodeGenerator(model)
 
     @deprecated("use enablePlugins(CodegenPlugin)", "")
-    lazy val slickCodegenSettings: Seq[Setting[_]] = projectSettings
+    lazy val slickCodegenSettings: Seq[Setting[?]] = projectSettings
   }
 
   import autoImport._
@@ -135,13 +136,13 @@ object CodegenPlugin extends sbt.AutoPlugin {
       s.log.info(s"Source code files have been generated in ${outDir.getAbsolutePath}")
       listScalaFileRecursively(outDir)
     } else {
-      val generatedFile = outputDir + "/" + pkg.replaceAllLiterally(".", "/") + "/" + fileName
+      val generatedFile = outputDir + "/" + pkg.replace(".", "/") + "/" + fileName
       s.log.info(s"Source code has generated in ${generatedFile}")
       Seq(file(generatedFile))
     }
   }
 
-  override lazy val projectSettings: Seq[Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[Setting[?]] = Seq(
     slickCodegenDriver := slick.jdbc.PostgresProfile,
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenDatabaseUrl := "Database url is not set",

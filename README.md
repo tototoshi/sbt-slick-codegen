@@ -1,6 +1,6 @@
 # sbt-slick-codegen
 
-[![CI](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/ci.yml/badge.svg)](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/ci.yml)
+[![Build and Test](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/build-test.yml/badge.svg)](https://github.com/tototoshi/sbt-slick-codegen/actions/workflows/build-test.yml)
 
 slick-codegen compile hook for sbt
 

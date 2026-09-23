@@ -1,3 +1,1 @@
-addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.3")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.10.0")
-addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.2.1")
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.2")
